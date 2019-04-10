@@ -45,6 +45,7 @@ Game::Game(MainWindow& wnd)
 	{
 		Brightstars[i].StarSet(rng, brd);
 	}
+	wnd.kbd.DisableAutorepeat();
 }
 
 void Game::Go()
@@ -54,35 +55,51 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
+static bool keyWasPessed = false;
+static char keyPressed = 'c';
+static char currentKey = 'c';
 void Game::UpdateModel()
 {
+	//debug movement by limiting snek one move per key press
 	if (GameIsStarted)
 	{
 		if (!GameIsOver)
 		{
-			if (wnd.kbd.KeyIsPressed(VK_UP))
+			if (!keyWasPessed)
 			{
-				delta_loc = { 0,-1 };
-				dir = Direction::UP;
-			}
-			if (wnd.kbd.KeyIsPressed(VK_DOWN))
-			{
-				delta_loc = { 0,1 };
-				dir = Direction::DOWN;
+				if (wnd.kbd.KeyIsPressed(VK_UP))
+				{
+					keyPressed = wnd.kbd.ReadChar();
+					keyWasPessed = true; //debug move
+					delta_loc = { 0,-1 };
+					dir = Direction::UP;
+				}
+				else if (wnd.kbd.KeyIsPressed(VK_DOWN))
+				{
+					keyPressed = wnd.kbd.ReadChar();
+					keyWasPessed = true; //debug move
+					delta_loc = { 0,1 };
+					dir = Direction::DOWN;
 
-			}
-			if (wnd.kbd.KeyIsPressed(VK_LEFT))
-			{
-				delta_loc = { -1, 0 };
-				dir = Direction::LEFT;
+				}
+				else if (wnd.kbd.KeyIsPressed(VK_LEFT))
+				{
+					keyPressed = wnd.kbd.ReadChar();
+					keyWasPessed = true; //debug move
+					delta_loc = { -1, 0 };
+					dir = Direction::LEFT;
 
-			}
-			if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-			{
-				delta_loc = { 1,0 };
-				dir = Direction::RIGHT;
+				}
+				else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+				{
+					keyPressed = wnd.kbd.ReadChar();
+					keyWasPessed = true; //debug move
+					delta_loc = { 1,0 };
+					dir = Direction::RIGHT;
 
+				}
+				
+				
 			}
 			BrightStarCounter++;
 			if (BrightStarCounter >= BrightStarresetMax)
@@ -103,7 +120,7 @@ void Game::UpdateModel()
 						snek.InsideTrialExceptEnd(next) ||
 						ties[i].Collision(next))
 					{
-						GameIsOver = true;
+						GameIsOver = true; 
 					}
 				}
 				for (int i = 0; i < maxCargo; i++)
@@ -117,8 +134,17 @@ void Game::UpdateModel()
 					}
 
 				}
-				snek.moveby(delta_loc);
-				snek.DirectionUpdate(dir);
+				Keyboard::Event kbdEvent = wnd.kbd.ReadKey();
+				if (keyWasPessed && kbdEvent.IsRelease())
+				{
+					snek.moveby(delta_loc);
+					snek.DirectionUpdate(dir);
+					
+					keyWasPessed = false;
+
+
+				}
+				
 			}
 
 
