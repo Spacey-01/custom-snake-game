@@ -4,6 +4,7 @@ Tasks for Games28
 
 1.
 Make a function that draws a line with a length and line thickness.
+
 The line can be drawn at any location on the screen. 
 The line only needs to be axis aligned .  
 The function must be in the form : 
