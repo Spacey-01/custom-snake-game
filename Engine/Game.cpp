@@ -109,18 +109,19 @@ void Game::UpdateModel()
 
 			//snek.DirectionUpdate(wnd.kbd);
 			Snakeresetcounter++;
+			const Location next = snek.GetnextHeadLocation(delta_loc);
 			if (Snakeresetcounter == SnakeResetMax)
 			{  
 				Snakeresetcounter = 0;
 				//for (int i = 0; i < maxTie; i++)				//debug
 				{
-					const Location next = snek.GetnextHeadLocation(delta_loc);
-					if (!brd.InsideBoard(next)
+					
+					//if (!brd.InsideBoard(next)
 						//|| snek.InsideTrialExceptEnd(next)	//debug
 						//|| ties[i].Collision(next))			//debug
-					){
-						GameIsOver = true; 
-					}
+					//){
+						//GameIsOver = true; 
+					//}
 				}
 				for (int i = 0; i < maxCargo; i++)
 				{
@@ -134,7 +135,7 @@ void Game::UpdateModel()
 
 				}
 				Keyboard::Event kbdEvent = wnd.kbd.ReadKey();
-				if (keyWasPessed && kbdEvent.IsRelease())
+				if (keyWasPessed && kbdEvent.IsRelease() && brd.InsideBoard(next))
 				{
 					snek.moveby(delta_loc);
 					snek.DirectionUpdate(dir);

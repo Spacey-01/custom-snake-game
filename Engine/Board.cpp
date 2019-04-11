@@ -60,24 +60,26 @@ void Board::BrightStar2(Location & loc)
 
 bool Board::InsideBoard(const Location & loc) const
 {
-	return	loc.x > 0 && loc.x <= width - 2 &&
-			loc.y > 0 && loc.y <= height - 2;
+	return	loc.x >= 0 && loc.x <= width - 1  &&
+			loc.y >= 0 && loc.y <= height - 1;
 }
 
 void Board::DrawBoundry()
 {
-	const int top = y;
-	const int left = x;
-	const int bottom = top + (borderWidth + borderPadding) * 2 + height * dimension ;
-	const int right = left + (borderWidth + borderPadding) * 2 + width  * dimension ;
+	int sprExtPix = 6;
+
+	const int top		= off_y - borderPadding;
+	const int left		= off_x - borderPadding;
+	const int bottom	= off_y +  height * dimension + borderPadding + sprExtPix;
+	const int right		= off_x +  width * dimension + borderPadding + sprExtPix;
 	//top
-	gfx.DrawRect(left, top, right, top + borderWidth, borderColor);
+	gfx.DrawRect(left - borderWidth, top, right + borderWidth, top - borderWidth, borderColor);
 	//left
-	gfx.DrawRect(left, top + borderWidth, left + borderWidth, bottom - borderWidth, borderColor);
+	gfx.DrawRect(left, top, left - borderWidth, bottom, borderColor);
 	//right
-	gfx.DrawRect(right - borderWidth, top + borderWidth, right, bottom - borderWidth, borderColor);
+	gfx.DrawRect(right, top , right + borderWidth, bottom, borderColor);
 	//bottom
-	gfx.DrawRect(left, bottom - borderWidth, right, bottom, borderColor);
+	gfx.DrawRect(left - borderWidth, bottom, right + borderWidth, bottom + borderWidth, borderColor);
 }
 
 int Board::Getwidth()

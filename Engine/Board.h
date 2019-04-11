@@ -22,15 +22,15 @@ public:
 	int Getwidth();
 	int Getheight();
 private:
-	static constexpr int dimension = 20;
-	static constexpr int width = 32;
-	static constexpr int height = 24;
-	static constexpr int x = 70;
-	static constexpr int y = 50;
+	static constexpr int dimension = 20;	//cargo width OR height
+	static constexpr int width = 32;		//number of cells x-axis
+	static constexpr int height = 24;		//number cells y-axis
+	static constexpr int x = 70;			//origin boarder x-axis
+	static constexpr int y = 50;			//origin boarder y-axis
 	static constexpr int borderWidth = 4;
 	static constexpr int borderPadding = 2;
 	static constexpr Color borderColor = Colors::Yellow;
-	const int off_x = x + borderWidth + borderPadding;
-	const int off_y = y + borderWidth + borderPadding;
+	const int off_x = x;// +borderWidth + borderPadding;
+	const int off_y = y;// +borderWidth + borderPadding;
 	Graphics& gfx;
 };
