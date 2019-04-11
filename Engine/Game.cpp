@@ -64,42 +64,34 @@ void Game::UpdateModel()
 	{
 		if (!GameIsOver)
 		{
-			if (!keyWasPessed)
+
+			if (wnd.kbd.KeyIsPressed(VK_UP))
 			{
-				if (wnd.kbd.KeyIsPressed(VK_UP))
-				{
-
-					keyWasPessed = true; //debug move
-					delta_loc = { 0,-1 };
-					dir = Direction::UP;
-				}
-				else if (wnd.kbd.KeyIsPressed(VK_DOWN))
-				{
-
-					keyWasPessed = true; //debug move
-					delta_loc = { 0,1 };
-					dir = Direction::DOWN;
-
-				}
-				else if (wnd.kbd.KeyIsPressed(VK_LEFT))
-				{
-
-					keyWasPessed = true; //debug move
-					delta_loc = { -1, 0 };
-					dir = Direction::LEFT;
-
-				}
-				else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-				{
-
-					keyWasPessed = true; //debug move
-					delta_loc = { 1,0 };
-					dir = Direction::RIGHT;
-
-				}
-				
-				
+				keyWasPessed = true;
+				delta_loc = { 0,-1 };
+				dir = Direction::UP;
 			}
+			else if (wnd.kbd.KeyIsPressed(VK_DOWN))
+			{
+				delta_loc = { 0,1 };
+				dir = Direction::DOWN;
+
+			}
+			else if (wnd.kbd.KeyIsPressed(VK_LEFT))
+			{
+				delta_loc = { -1, 0 };
+				dir = Direction::LEFT;
+
+			}
+			else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+			{
+				delta_loc = { 1,0 };
+				dir = Direction::RIGHT;
+
+			}
+
+
+
 			BrightStarCounter++;
 			if (BrightStarCounter >= BrightStarresetMax)
 			{
@@ -109,19 +101,20 @@ void Game::UpdateModel()
 
 			//snek.DirectionUpdate(wnd.kbd);
 			Snakeresetcounter++;
-			const Location next = snek.GetnextHeadLocation(delta_loc);
+
 			if (Snakeresetcounter == SnakeResetMax)
-			{  
+			{
 				Snakeresetcounter = 0;
-				//for (int i = 0; i < maxTie; i++)				//debug
+				const Location next = snek.GetnextHeadLocation(delta_loc);
+				for (int i = 0; i < maxTie; i++)
 				{
-					
-					//if (!brd.InsideBoard(next)
-						//|| snek.InsideTrialExceptEnd(next)	//debug
-						//|| ties[i].Collision(next))			//debug
-					//){
-						//GameIsOver = true; 
-					//}
+
+					if (!brd.InsideBoard(next)
+						|| snek.InsideTrialExceptEnd(next)
+						|| ties[i].Collision(next))
+					{
+						GameIsOver = true;
+					}
 				}
 				for (int i = 0; i < maxCargo; i++)
 				{
@@ -134,20 +127,19 @@ void Game::UpdateModel()
 					}
 
 				}
+				//corrects the issue moving close to a wall edge
 				Keyboard::Event kbdEvent = wnd.kbd.ReadKey();
-				if (keyWasPessed && kbdEvent.IsRelease() && brd.InsideBoard(next))
+				if (brd.InsideBoard(next))
 				{
 					snek.moveby(delta_loc);
 					snek.DirectionUpdate(dir);
-					
+
 					keyWasPessed = false;
 
 
 				}
-				
+
 			}
-
-
 		}
 	}
 	else
