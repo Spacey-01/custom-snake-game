@@ -112,13 +112,13 @@ void Game::UpdateModel()
 			if (Snakeresetcounter == SnakeResetMax)
 			{  
 				Snakeresetcounter = 0;
-				for (int i = 0; i < maxTie; i++)
+				//for (int i = 0; i < maxTie; i++)				//debug
 				{
 					const Location next = snek.GetnextHeadLocation(delta_loc);
-					if (!brd.InsideBoard(next) ||
-						snek.InsideTrialExceptEnd(next) ||
-						ties[i].Collision(next))
-					{
+					if (!brd.InsideBoard(next)
+						//|| snek.InsideTrialExceptEnd(next)	//debug
+						//|| ties[i].Collision(next))			//debug
+					){
 						GameIsOver = true; 
 					}
 				}
