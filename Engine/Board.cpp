@@ -60,8 +60,8 @@ void Board::BrightStar2(Location & loc)
 
 bool Board::InsideBoard(const Location & loc) const
 {
-	return loc.x >= 0 && loc.x <= width - 2 &&
-		loc.y > 0 && loc.y <= height - 2;
+	return	loc.x > 0 && loc.x <= width - 2 &&
+			loc.y > 0 && loc.y <= height - 2;
 }
 
 void Board::DrawBoundry()

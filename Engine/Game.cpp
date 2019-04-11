@@ -56,8 +56,7 @@ void Game::Go()
 	gfx.EndFrame();
 }
 static bool keyWasPessed = false;
-static char keyPressed = 'c';
-static char currentKey = 'c';
+
 void Game::UpdateModel()
 {
 	//debug movement by limiting snek one move per key press
@@ -69,14 +68,14 @@ void Game::UpdateModel()
 			{
 				if (wnd.kbd.KeyIsPressed(VK_UP))
 				{
-					keyPressed = wnd.kbd.ReadChar();
+
 					keyWasPessed = true; //debug move
 					delta_loc = { 0,-1 };
 					dir = Direction::UP;
 				}
 				else if (wnd.kbd.KeyIsPressed(VK_DOWN))
 				{
-					keyPressed = wnd.kbd.ReadChar();
+
 					keyWasPessed = true; //debug move
 					delta_loc = { 0,1 };
 					dir = Direction::DOWN;
@@ -84,7 +83,7 @@ void Game::UpdateModel()
 				}
 				else if (wnd.kbd.KeyIsPressed(VK_LEFT))
 				{
-					keyPressed = wnd.kbd.ReadChar();
+
 					keyWasPessed = true; //debug move
 					delta_loc = { -1, 0 };
 					dir = Direction::LEFT;
@@ -92,7 +91,7 @@ void Game::UpdateModel()
 				}
 				else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 				{
-					keyPressed = wnd.kbd.ReadChar();
+
 					keyWasPessed = true; //debug move
 					delta_loc = { 1,0 };
 					dir = Direction::RIGHT;
@@ -111,7 +110,7 @@ void Game::UpdateModel()
 			//snek.DirectionUpdate(wnd.kbd);
 			Snakeresetcounter++;
 			if (Snakeresetcounter == SnakeResetMax)
-			{
+			{  
 				Snakeresetcounter = 0;
 				for (int i = 0; i < maxTie; i++)
 				{
