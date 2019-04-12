@@ -3,51 +3,39 @@
 Tasks for Games28
 
 1.
-Make a function that draws a line with a length and line thickness.
+Drawline func parameters:
+Void Drawline(unsigned int x, unsigned int y, int length, bool isVerticle, Color c)
 
-The line can be drawn at any location on the screen. 
+Remember for this case we are only either drawing a line parallel to the x-axis 
 
-The line only needs to be axis aligned .  
-
-The function must be in the form : 
-
-        void Drawline(int x, int y, int length, int thickness)
-	
-NOTE:  
-
-Parameters x and y  signed integers - meaning they can be either positive or negative. 
-
-Use this to your advantage and think about :
-
-    +x moves in a positive direction
-    
-    -x moves in a negative direction
-    
-    +y moves in a positive direction
-    
-    -y moves in a negative direction
-    
-    and the absolute value of x and is the start location
+or the y-axis. We do NOT need a sloped line.
     
 
 Answer:
 
-void Graphics::DrawLine(int in_x, int in_y, int length, int width)
+void Drawline(unsigned int x, unsigned int y,  unsigned int length, bool isVerticle, Color c)
 
-	{
+{
+
+        if(isVerticle)
 	
-		for (int y = in_y; y < width; y++)
+        {
+	
+                for (int i = y ; i < y+ length; i++)
 		
-		{
-			for (int x = in_x; x < length; x++)
-			
-			{
-			
-				PutPixel(x, y, Colors::Blue);
-				
-			}
-			
-		}
+                       putpixel(x,i,c);  // draws vertical line as " i " is changing in the " y " axis
+		       
+        } 
+	
+        else 
+	
+        {
+	
+                for (int i = x; i < x + length; i++)
 		
-	}
+                        putpixel(i,y,c);  //draws horizontal line and " i " changing the " x " axis
+			
+        }
+	
+}
 	
